@@ -1,6 +1,6 @@
-import { dbAdmin } from "@src/config/firebase-admin";
-import { PromptRepository } from "@src/interfaces/prompt-repository";
-import { SystemPrompt } from "@src/types/repositories";
+import { dbAdmin } from "../config/firebase-admin";
+import { PromptRepository } from "../interfaces/prompt-repository";
+import { SystemPrompt } from "../types/repositories";
 
 export class FirebasePromptRepository implements PromptRepository {
   private db = dbAdmin;

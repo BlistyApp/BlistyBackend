@@ -1,4 +1,4 @@
-import RepositoryFactory from "@src/services/repo-factory";
+import RepositoryFactory from "../services/repo-factory";
 
 export const match = async (
   tags: Array<string>,

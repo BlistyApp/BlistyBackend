@@ -1,8 +1,8 @@
 import OpenAI from "openai";
-import { validateEnvVariables } from "@src/utils/enviroment";
-import { EnvVarKey } from "@src/types/enviroment";
-import RepositoryFactory from "@src/services/repo-factory";
-import logger from "@src/utils/logger";
+import { validateEnvVariables } from "../utils/enviroment";
+import { EnvVarKey } from "../types/enviroment";
+import RepositoryFactory from "../services/repo-factory";
+import logger from "../utils/logger";
 
 const requiredEnvVars: EnvVarKey[] = ["OPENAI_API_KEY", "OPENAI_PROJECT"];
 

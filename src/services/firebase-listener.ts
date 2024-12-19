@@ -1,4 +1,4 @@
-import { DatabaseListener } from "@src/interfaces/database-listener";
+import { DatabaseListener } from "../interfaces/database-listener";
 import {
   addDoc,
   collection,
@@ -12,11 +12,11 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { dbClient } from "@src/config/firebase-client";
-import logger from "@src/utils/logger";
-import { FBMessage, OAIMessage, Room } from "@src/types/service";
-import { getResponse } from "@src/services/ai-chat";
-import { match } from "@src/services/psyco-match";
+import { dbClient } from "../config/firebase-client";
+import logger from "../utils/logger";
+import { FBMessage, OAIMessage, Room } from "../types/service";
+import { getResponse } from "../services/ai-chat";
+import { match } from "../services/psyco-match";
 
 class FirebaseListener implements DatabaseListener {
   private activeListeners = new Map<string, () => void>();

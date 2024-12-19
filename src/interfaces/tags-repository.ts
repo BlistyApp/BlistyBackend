@@ -1,4 +1,4 @@
-import { MasterTag, Tag } from "@src/types/repositories";
+import { MasterTag, Tag } from "../types/repositories";
 
 export interface TagsRepository {
   getTags: () => Promise<Tag[]>;

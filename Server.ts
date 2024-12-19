@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import credsRouter from "@src/routes/creds";
-import logger from "@src/utils/logger";
+import credsRouter from "./src/routes/creds";
+import logger from "./src/utils/logger";
 import morgan, { StreamOptions } from "morgan";
-import ListenersFactory from "@src/services/listeners-factory";
+import ListenersFactory from "./src/services/listeners-factory";
 
 const server = express();
 const stream: StreamOptions = {

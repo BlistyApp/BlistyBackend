@@ -1,5 +1,5 @@
-import logger from "@src/utils/logger";
-import { EnvVarKey } from "@src/types/enviroment";
+import logger from "../utils/logger";
+import { EnvVarKey } from "../types/enviroment";
 
 function validateEnvVariables(envVars: EnvVarKey[]): void {
   const missingVars = envVars.filter((envVar) => !process.env[envVar]);

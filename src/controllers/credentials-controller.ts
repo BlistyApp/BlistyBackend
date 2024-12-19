@@ -1,9 +1,9 @@
-import { EnvVarKey } from "@src/types/enviroment";
-import { validateEnvVariables } from "@src/utils/enviroment";
+import { EnvVarKey } from "../types/enviroment";
+import { validateEnvVariables } from "../utils/enviroment";
 import { Request, Response } from "express";
-import { FirebaseCredentials } from "@src/types/service";
-import { CryptoService } from "@src/interfaces/crypto-service";
-import CryptoJSCryptoService from "@src/services/cryptojs-crypto-service";
+import { FirebaseCredentials } from "../types/service";
+import { CryptoService } from "../interfaces/crypto-service";
+import CryptoJSCryptoService from "../services/cryptojs-crypto-service";
 
 class CredentialsController {
   private static cryptoS: CryptoService = new CryptoJSCryptoService();

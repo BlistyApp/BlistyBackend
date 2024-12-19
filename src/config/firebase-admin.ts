@@ -1,6 +1,6 @@
-import { EnvVarKey } from "@src/types/enviroment";
-import { validateEnvVariables } from "@src/utils/enviroment";
-import logger from "@src/utils/logger";
+import { EnvVarKey } from "../types/enviroment";
+import { validateEnvVariables } from "../utils/enviroment";
+import logger from "../utils/logger";
 import { cert, initializeApp, ServiceAccount } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 

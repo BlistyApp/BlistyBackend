@@ -1,4 +1,4 @@
-import CredentialsController from "@src/controllers/credentials-controller";
+import CredentialsController from "../controllers/credentials-controller";
 import { Router } from "express";
 
 const router = Router();

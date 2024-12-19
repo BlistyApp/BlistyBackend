@@ -1,5 +1,5 @@
-import { secretKey } from "@src/config/crypto";
-import { CryptoService } from "@src/interfaces/crypto-service";
+import { secretKey } from "../config/crypto";
+import { CryptoService } from "../interfaces/crypto-service";
 import CryptoJS from "crypto-js";
 
 class CryptoJSCryptoService implements CryptoService {

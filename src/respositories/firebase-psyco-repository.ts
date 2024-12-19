@@ -1,6 +1,6 @@
-import { dbAdmin } from "@src/config/firebase-admin";
-import { PsycoRepository } from "@src/interfaces/psyco-repository";
-import { Psychologist } from "@src/types/service";
+import { dbAdmin } from "../config/firebase-admin";
+import { PsycoRepository } from "../interfaces/psyco-repository";
+import { Psychologist } from "../types/service";
 
 class FirebasePsycoRepository implements PsycoRepository {
   private db = dbAdmin;

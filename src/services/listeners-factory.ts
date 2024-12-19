@@ -1,7 +1,7 @@
-import { RepoType } from "@src/types/repositories";
+import { RepoType } from "../types/repositories";
 import FirebaseListener from "./firebase-listener";
-import logger from "@src/utils/logger";
-import { DatabaseListener } from "@src/interfaces/database-listener";
+import logger from "../utils/logger";
+import { DatabaseListener } from "../interfaces/database-listener";
 
 class ListenersFactory {
   static getListener(type: RepoType): DatabaseListener {

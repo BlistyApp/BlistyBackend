@@ -1,7 +1,7 @@
 import { ChatCompletionMessageParam } from "openai/resources";
-import { dbAdmin } from "@src/config/firebase-admin";
-import { openai, systemPrompt } from "@src/config/openai";
-import { AIResponse, OAIMessage } from "@src/types/service";
+import { dbAdmin } from "../config/firebase-admin";
+import { openai, systemPrompt } from "../config/openai";
+import { AIResponse, OAIMessage } from "../types/service";
 
 const getResponse = async (
   history: Array<OAIMessage>,

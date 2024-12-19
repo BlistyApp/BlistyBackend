@@ -1,4 +1,4 @@
-import { Psychologist } from "@src/types/service";
+import { Psychologist } from "../types/service";
 
 export interface PsycoRepository {
   getPsycologists: () => Promise<Psychologist[]>;

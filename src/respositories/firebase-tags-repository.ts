@@ -1,6 +1,6 @@
-import { dbAdmin } from "@src/config/firebase-admin";
-import { TagsRepository } from "@src/interfaces/tags-repository";
-import { MasterTag, Tag } from "@src/types/repositories";
+import { dbAdmin } from "../config/firebase-admin";
+import { TagsRepository } from "../interfaces/tags-repository";
+import { MasterTag, Tag } from "../types/repositories";
 
 export class FirebaseTagsRepository implements TagsRepository {
   private db = dbAdmin;

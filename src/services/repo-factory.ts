@@ -1,9 +1,9 @@
-import { TagsRepository } from "@src/interfaces/tags-repository";
-import { FirebasePromptRepository } from "@src/respositories/firebase-prompt-repository";
-import FirebasePsycoRepository from "@src/respositories/firebase-psyco-repository";
-import { FirebaseTagsRepository } from "@src/respositories/firebase-tags-repository";
-import { RepoType } from "@src/types/repositories";
-import logger from "@src/utils/logger";
+import { TagsRepository } from "../interfaces/tags-repository";
+import { FirebasePromptRepository } from "../respositories/firebase-prompt-repository";
+import FirebasePsycoRepository from "../respositories/firebase-psyco-repository";
+import { FirebaseTagsRepository } from "../respositories/firebase-tags-repository";
+import { RepoType } from "../types/repositories";
+import logger from "../utils/logger";
 
 class RepositoryFactory {
   static getTagsRepository(type: RepoType): TagsRepository {
