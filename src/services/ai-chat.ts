@@ -1,7 +1,7 @@
 import { ChatCompletionMessageParam } from "openai/resources";
-import { dbAdmin } from "./FirebaseAdmin";
-import { openai, systemPromt } from "./OpenAI";
-import { AIResponse, OAIMessage } from "./serviceTypes";
+import { dbAdmin } from "@src/config/firebase-admin";
+import { openai, systemPrompt } from "@src/config/openai";
+import { AIResponse, OAIMessage } from "@src/types/service";
 
 const getResponse = async (
   history: Array<OAIMessage>,
@@ -10,7 +10,7 @@ const getResponse = async (
   const name =
     (await getName(userId)) ?? "Indefinido, omitir nombre de usuario";
   const aiMessages = Array<OAIMessage>();
-  const sys = systemPromt + ", Saluda por su nombre usuario: " + name;
+  const sys = systemPrompt + ", Saluda por su nombre usuario: " + name;
   aiMessages.push({ role: "system", content: sys });
   history.forEach((message) => {
     aiMessages.push(message);
@@ -39,7 +39,6 @@ const getResponse = async (
       if (endChatMatch) {
         endChat = true;
       }
-      // Si lees esto yapeame 100so
       content = content?.replace(/<Tags>\[(.*?)\]<\/Tags>/, "");
       content = content?.replace(/<MTags>\[(.*?)\]<\/MTags>/, "");
       content = content?.replace(/<End-Chat-Blisty>/, "");

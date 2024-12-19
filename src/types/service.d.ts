@@ -1,39 +1,36 @@
-export interface FirebaseCredentials {
+export type FirebaseCredentials = {
   apiKey: string;
   authDomain: string;
   projectId: string;
   storageBucket: string;
   messagingSenderId: string;
   appId: string;
-}
+};
 
-export interface BlistyRoom {
+export type Room = {
   createdAt: Date;
   end: boolean;
-  roomId: string;
   userIds: string[];
   users: Array<User>;
   tags?: Array<string>;
   mTags?: Array<string>;
-}
+  roomId: string;
+  last_refresh: Date;
+};
 
-export interface User {
-  name: string;
-  profilePic?: string;
-  userId: string;
-}
-
-export interface FBMessage {
+export type FBMessage = {
   createdAt: Date;
   from: string;
   text: string;
   to: string;
-  type: string;
+  type: "refresh_notification" | "contact" | "ia_suggestion";
   psicoUids?: string[];
-}
+  id?: string;
+  responded?: boolean;
+};
 
 export interface OAIMessage {
-  role: string;
+  role: "assistant" | "user" | "system";
   content: Array<object> | string;
 }
 
@@ -45,7 +42,7 @@ export interface AIResponse {
 }
 
 export interface Psychologist {
-  uid: string;
+  id: string;
   tags: Array<string>;
   mTags: Array<string>;
   matchIndex: number;

@@ -1,22 +1,27 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import express, { Request, Response } from "express";
-import morgan from "morgan";
-import { getCredentials } from "./services/Credentials";
-import { initDBListener } from "./services/DBListeners";
+import express from "express";
+import credsRouter from "@src/routes/creds";
+import logger from "@src/utils/logger";
+import morgan, { StreamOptions } from "morgan";
+import ListenersFactory from "@src/services/listeners-factory";
 
 const server = express();
+const stream: StreamOptions = {
+  write: (message: string) => {
+    logger.http(message.trim());
+    console.log(message.trim());
+  },
+};
 const port: number = parseInt((process.env.PORT ?? "") as string, 10) || 3000;
 
 server.use(express.json());
-server.use(morgan("dev"));
+server.use(morgan("combined", { stream }));
+server.use(credsRouter);
 
-server.get("/creds", async (_req: Request, res: Response): Promise<void> => {
-  res.status(200).json(getCredentials());
-});
-
-initDBListener();
+const listener = ListenersFactory.getListener("firebase");
+listener.initDBListeners();
 
 server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  logger.info(`Server is running on port ${port}`);
 });
