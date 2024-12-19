@@ -10,7 +10,7 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: "logs/blisty-backend.log" }),
+    new winston.transports.File({ filename: "/tmp/logs/blisty-backend.log" }),
   ],
 });
 
