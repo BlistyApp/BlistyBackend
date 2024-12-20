@@ -28,6 +28,7 @@ const updateSystemPrompt = async (): Promise<void> => {
   mTags.forEach((mTag) => {
     systemPrompt.message_structure.tags.dictionary.push(mTag.label);
   })
+  console.log(systemPrompt);
 };
 
 updateSystemPrompt();
