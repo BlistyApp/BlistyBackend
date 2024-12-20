@@ -1,3 +1,4 @@
+import { PromptRepository } from "src/interfaces/prompt-repository";
 import { TagsRepository } from "../interfaces/tags-repository";
 import { FirebasePromptRepository } from "../respositories/firebase-prompt-repository";
 import FirebasePsycoRepository from "../respositories/firebase-psyco-repository";
@@ -15,7 +16,7 @@ class RepositoryFactory {
     throw error;
   }
 
-  static getPromptRepository(type: RepoType) {
+  static getPromptRepository(type: RepoType) : PromptRepository{
     if (type === "firebase") {
       return new FirebasePromptRepository();
     }

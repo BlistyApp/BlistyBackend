@@ -19,7 +19,3 @@ export type Tag = {
   id?: string;
 };
 
-export type SystemPrompt = {
-  prompt: string;
-  id?: string;
-};

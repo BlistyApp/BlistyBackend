@@ -1,3 +1,5 @@
+import { AIPrompt } from "src/types/service";
+
 export interface PromptRepository {
-  getSystemPrompt: () => Promise<string>;
+  getSystemPrompt: () => Promise<AIPrompt>;
 }

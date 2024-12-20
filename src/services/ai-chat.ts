@@ -1,54 +1,49 @@
 import { ChatCompletionMessageParam } from "openai/resources";
 import { dbAdmin } from "../config/firebase-admin";
 import { openai, systemPrompt } from "../config/openai";
-import { AIResponse, OAIMessage } from "../types/service";
+import { AIResponse, AIServiceResponse, OAIMessage } from "../types/service";
+import logger from "src/utils/logger";
 
 const getResponse = async (
   history: Array<OAIMessage>,
   userId: string
-): Promise<AIResponse> => {
+): Promise<AIServiceResponse> => {
   const name =
     (await getName(userId)) ?? "Indefinido, omitir nombre de usuario";
   const aiMessages = Array<OAIMessage>();
-  const sys = systemPrompt + ", Saluda por su nombre usuario: " + name;
-  aiMessages.push({ role: "system", content: sys });
+  const sys = systemPrompt;
+  sys.user_info.name = name;
+  aiMessages.push({ role: "system", content: sys.toString()});
   history.forEach((message) => {
     aiMessages.push(message);
   });
   let newMessage: OAIMessage = { role: "assistant", content: "" };
-  let tags: Array<string> = [];
-  let mTags: Array<string> = [];
-  let endChat = false;
+  let end = false;
+  let tags = Array<string>();
+  let mTags = Array<string>();
   try {
     const apiResponse = await openai.chat.completions.create({
       model: process.env.OPENAI_MODEL ?? "",
       messages: aiMessages as ChatCompletionMessageParam[],
     });
+    console.log(apiResponse);
     for (const mBlock of apiResponse.choices) {
       const role = mBlock.message.role;
-      let content = mBlock.message.content ?? "";
-      const tagsMatch = content?.match(/<Tags>\[(.*?)\]<\/Tags>/);
-      const masterTagsMatch = content?.match(/<MTags><\/MTags>/);
-      const endChatMatch = content?.match(/<End-Chat-Blisty>/);
-      if (tagsMatch) {
-        tags = tagsMatch[1].split(", ").map((tag) => tag.trim());
+      if (! mBlock.message.content) {
+        continue;
       }
-      if (masterTagsMatch) {
-        mTags = masterTagsMatch[1].split(", ").map((tag) => tag.trim());
-      }
-      if (endChatMatch) {
-        endChat = true;
-      }
-      content = content?.replace(/<Tags>\[(.*?)\]<\/Tags>/, "");
-      content = content?.replace(/<MTags>\[(.*?)\]<\/MTags>/, "");
-      content = content?.replace(/<End-Chat-Blisty>/, "");
-      content = content.trim();
-      newMessage = { role: role, content: content };
+      const content = (await JSON.parse(mBlock.message.content)) as AIResponse;
+      newMessage = { role, content: content.content };
+      tags = content.tags;
+      mTags = content.mTags;
+      end = content.end;
     }
   } catch (e) {
-    console.log(e);
+    logger.error(`Error en la solicitud de OpenAI: ${e}`);
+    newMessage.content = "Lo siento, no puedo responder en este momento";
+    end = true;
   }
-  return { tags, mTags, endChat, message: newMessage };
+  return { tags, mTags, end, content: newMessage };
 };
 
 const getName = async (userId: string) => {

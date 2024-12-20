@@ -154,10 +154,10 @@ class FirebaseListener implements DatabaseListener {
     roomId: string
   ): Promise<void> {
     const response = await getResponse(history, userId);
-    const newMessage = this.OAIMessageToFBMessage(response.message, userId);
+    const newMessage = this.OAIMessageToFBMessage(response.content, userId);
     const roomRef = doc(dbClient, "rooms", roomId);
     const room = (await getDoc(roomRef)).data() as Room;
-    if (response.endChat) {
+    if (response.end) {
       const tags = room.tags ?? [];
       const mTags = room.mTags ?? [];
       tags.push(...response.tags);
@@ -169,7 +169,7 @@ class FirebaseListener implements DatabaseListener {
     await updateDoc(roomRef, {
       tags: response.tags,
       mTags: response.mTags,
-      end: response.endChat,
+      end: response.end,
     });
     await addDoc(collection(dbClient, `rooms/${roomId}/messages`), newMessage);
   }

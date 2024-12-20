@@ -3,6 +3,7 @@ import { validateEnvVariables } from "../utils/enviroment";
 import { EnvVarKey } from "../types/enviroment";
 import RepositoryFactory from "../services/repo-factory";
 import logger from "../utils/logger";
+import { AIPrompt } from "src/types/service";
 
 const requiredEnvVars: EnvVarKey[] = ["OPENAI_API_KEY", "OPENAI_PROJECT"];
 
@@ -13,17 +14,20 @@ const openai = new OpenAI({
   project: process.env.OPENAI_PROJECT!,
 });
 
-let systemPrompt: string = "";
+let systemPrompt: AIPrompt;
 
 const updateSystemPrompt = async (): Promise<void> => {
   const promptRepo = RepositoryFactory.getPromptRepository("firebase");
-  systemPrompt = await promptRepo.getSystemPrompt();
   const tagsRepo = RepositoryFactory.getTagsRepository("firebase");
+  let systemPrompt = await promptRepo.getSystemPrompt();
   const tags = await tagsRepo.getTags();
-  const masterTags = await tagsRepo.getMasterTags();
-  const tagsString = tags.map((tag) => tag.tag).join(", ");
-  const masterTagsString = masterTags.map((tag) => tag.tag).join(", ");
-  systemPrompt = `The system prompt is: "${systemPrompt}". Tags: ${tagsString}. Master tags: ${masterTagsString}`;
+  const mTags = await tagsRepo.getMasterTags();
+  tags.forEach((tag) => {
+    systemPrompt.message_structure.tags.dictionary.push(tag.label);
+  })
+  mTags.forEach((mTag) => {
+    systemPrompt.message_structure.tags.dictionary.push(mTag.label);
+  })
 };
 
 updateSystemPrompt();
