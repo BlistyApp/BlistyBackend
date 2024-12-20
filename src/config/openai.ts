@@ -19,7 +19,7 @@ let systemPrompt: AIPrompt;
 const updateSystemPrompt = async (): Promise<void> => {
   const promptRepo = RepositoryFactory.getPromptRepository("firebase");
   const tagsRepo = RepositoryFactory.getTagsRepository("firebase");
-  let systemPrompt = await promptRepo.getSystemPrompt();
+  systemPrompt = await promptRepo.getSystemPrompt();
   const tags = await tagsRepo.getTags();
   const mTags = await tagsRepo.getMasterTags();
   tags.forEach((tag) => {
