@@ -24,11 +24,10 @@ const updateSystemPrompt = async (): Promise<void> => {
   const mTags = await tagsRepo.getMasterTags();
   tags.forEach((tag) => {
     systemPrompt.message_structure.tags.dictionary.push(tag.label);
-  })
+  });
   mTags.forEach((mTag) => {
     systemPrompt.message_structure.tags.dictionary.push(mTag.label);
-  })
-  console.log(systemPrompt);
+  });
 };
 
 updateSystemPrompt();

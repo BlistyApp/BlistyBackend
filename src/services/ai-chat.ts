@@ -13,7 +13,7 @@ const getResponse = async (
   const aiMessages = Array<OAIMessage>();
   const sys = systemPrompt;
   sys.user_info.name = name;
-  aiMessages.push({ role: "system", content: sys.toString()});
+  aiMessages.push({ role: "system", content: JSON.stringify(sys) });
   history.forEach((message) => {
     aiMessages.push(message);
   });
@@ -26,10 +26,9 @@ const getResponse = async (
       model: process.env.OPENAI_MODEL ?? "",
       messages: aiMessages as ChatCompletionMessageParam[],
     });
-    console.log(apiResponse);
     for (const mBlock of apiResponse.choices) {
       const role = mBlock.message.role;
-      if (! mBlock.message.content) {
+      if (!mBlock.message.content) {
         continue;
       }
       const content = (await JSON.parse(mBlock.message.content)) as AIResponse;

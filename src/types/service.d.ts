@@ -56,47 +56,50 @@ export interface Psychologist {
 }
 
 export interface AIPrompt {
-  role: string,
-  description: string,
-  objectives: Array<string>,
+  role: string;
+  description: string;
+  objectives: Array<string>;
   conversation_guidelines: {
     tone: {
-      style: string,
-      avoid: Array<string>
-    },
+      style: string;
+      avoid: Array<string>;
+    };
     questions: {
-      approach: string,
-      examples: Array<string>
-    }
-  },
+      approach: string;
+      examples: Array<string>;
+    };
+    format: {
+      structure: string;
+      examples: Array<string>;
+    };
+  };
   message_structure: {
     content: {
-      type: string //"string",
-      description: string// "Contenido del mensaje"
-    },
+      type: string; //"string",
+      description: string; // "Contenido del mensaje"
+    };
     tags: {
-      type: string // "array",
-      description: string // "Etiquetas asignadas a la conversación",
-      dictionary: Array<string>
-    },
+      type: string; // "array",
+      description: string; // "Etiquetas asignadas a la conversación",
+      dictionary: Array<string>;
+    };
     mTags: {
-      type: string // "array",
-      description: string // "Etiquetas de derivación profesional asignadas a la conversación",
-      dictionary: Array<string>
-    }
+      type: string; // "array",
+      description: string; // "Etiquetas de derivación profesional asignadas a la conversación",
+      dictionary: Array<string>;
+    };
     end: {
-      type: string,
-      description: string //"Si la conversación finaliza, debes colocar este apartado en true",
-    }
-  },
-  message_example: string //"{\"content\": \"Hola como estas?\", \"tags\":[\"ansiety\", \"adolescense\"], \"mtags\":[\"clinical_psycology\"], \"end\":false }",
+      type: string;
+      description: string; //"Si la conversación finaliza, debes colocar este apartado en true",
+    };
+  };
   steps_of_interaction: [
     {
-      step: string,
-      description: string
+      step: string;
+      description: string;
     }
-  ],
+  ];
   user_info: {
-    name: string
-  }
+    name: string;
+  };
 }
