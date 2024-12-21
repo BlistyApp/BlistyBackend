@@ -88,7 +88,6 @@ class FirebaseListener implements DatabaseListener {
       if (roomsChange.type === "added") {
         logger.info(`Added room : ${roomId}`);
         if (!this.activeListeners.has(roomId)) {
-          console.log("Setting up listener for room", roomId);
           await this.setupMessagesListener(roomId);
         }
       } else if (roomsChange.type === "removed") {

@@ -25,8 +25,6 @@ export const match = async (
   bestMTags = Array.from(new Set(bestMTags));
   let bestTags = [...tags];
   bestTags = Array.from(new Set(bestTags));
-  console.log("Tags", bestTags);
-  console.log("MTags", bestMTags);
   const psycologists = await psycoRepo.getPsycologists();
   const scores: Array<{ id: string; score: number }> = [];
   psycologists.forEach((psyco) => {
@@ -42,9 +40,7 @@ export const match = async (
       }
     });
     scores.push({ id: psyco.id, score });
-    console.log(psyco.name, score);
   });
   scores.sort((a, b) => b.score - a.score);
-  console.log(scores);
   return scores.map((score) => score.id).slice(0, 3);
 };

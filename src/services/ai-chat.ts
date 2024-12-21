@@ -34,9 +34,6 @@ const getResponse = async (
     content: "",
     aiResponse: "",
   };
-  for (const message of aiMessages) {
-    console.log(message);
-  }
   let end = false;
   let tags = Array<string>();
   let mTags = Array<string>();
@@ -50,7 +47,6 @@ const getResponse = async (
       if (!mBlock.message.content) {
         continue;
       }
-      console.log("new-message: ", mBlock.message.content);
       const content = (await JSON.parse(mBlock.message.content)) as AIResponse;
       newMessage = {
         role,
