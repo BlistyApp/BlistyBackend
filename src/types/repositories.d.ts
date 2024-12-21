@@ -8,14 +8,12 @@ export type Timestamp = adminTypes.Timestamp | clienTypes.Timestamp;
 export type MasterTag = {
   createdAt: Timestamp;
   label: string;
-  tag: string;
-  id?: string;
+  id: string;
 };
 
 export type Tag = {
   createdAt: Timestamp;
   label: string;
-  tag: string;
-  id?: string;
+  masterTag: string;
+  id: string;
 };
-

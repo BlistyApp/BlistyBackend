@@ -13,11 +13,30 @@ const getResponse = async (
   const aiMessages = Array<OAIMessage>();
   const sys = systemPrompt;
   sys.user_info.name = name;
-  aiMessages.push({ role: "system", content: JSON.stringify(sys) });
-  history.forEach((message) => {
-    aiMessages.push(message);
+  aiMessages.push({
+    role: "system",
+    content: JSON.stringify(sys),
+    aiResponse: "",
   });
-  let newMessage: OAIMessage = { role: "assistant", content: "" };
+  history.forEach((message) => {
+    if (message.aiResponse) {
+      aiMessages.push({
+        role: message.role,
+        content: message.aiResponse,
+        aiResponse: "",
+      });
+    } else {
+      aiMessages.push(message);
+    }
+  });
+  let newMessage: OAIMessage = {
+    role: "assistant",
+    content: "",
+    aiResponse: "",
+  };
+  for (const message of aiMessages) {
+    console.log(message);
+  }
   let end = false;
   let tags = Array<string>();
   let mTags = Array<string>();
@@ -31,8 +50,13 @@ const getResponse = async (
       if (!mBlock.message.content) {
         continue;
       }
+      console.log("new-message: ", mBlock.message.content);
       const content = (await JSON.parse(mBlock.message.content)) as AIResponse;
-      newMessage = { role, content: content.content };
+      newMessage = {
+        role,
+        content: content.content,
+        aiResponse: mBlock.message.content,
+      };
       tags = content.tags;
       mTags = content.mTags;
       end = content.end;

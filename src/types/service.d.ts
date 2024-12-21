@@ -27,11 +27,13 @@ export type FBMessage = {
   psicoUids?: string[];
   id?: string;
   responded?: boolean;
+  aiResponse?: string;
 };
 
 export interface OAIMessage {
   role: "assistant" | "user" | "system";
   content: Array<object> | string;
+  aiResponse?: string;
 }
 
 export interface AIServiceResponse {
@@ -52,7 +54,7 @@ export interface Psychologist {
   id: string;
   tags: Array<string>;
   mTags: Array<string>;
-  matchIndex: number;
+  name: string;
 }
 
 export interface AIPrompt {

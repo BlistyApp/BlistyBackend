@@ -15,7 +15,7 @@ class FirebasePsycoRepository implements PsycoRepository {
         id: doc.id,
         tags: psychologist.tags,
         mTags: psychologist.mTags,
-        matchIndex: psychologist.matchIndex,
+        name: psychologist.name,
       });
     });
     return psychologists;

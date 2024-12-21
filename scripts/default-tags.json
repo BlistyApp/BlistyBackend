@@ -1,0 +1,107 @@
+[
+  {
+    "tags": [
+      { "tag": "anxiety", "label": "Ansiedad" },
+      { "tag": "depression", "label": "Depresión" },
+      { "tag": "stress", "label": "Estrés" },
+      { "tag": "emotional_support", "label": "Soporte Emocional" },
+      { "tag": "trauma", "label": "Trauma" }
+    ],
+    "label": "Psicología Clínica",
+    "mtag": "clinical_psychology"
+  },
+  {
+    "tags": [
+      { "tag": "children", "label": "Niños" },
+      { "tag": "adolescents", "label": "Adolescentes" },
+      { "tag": "behavioral_issues", "label": "Problemas de Conducta" },
+      { "tag": "parenting", "label": "Paternidad" },
+      { "tag": "school_problems", "label": "Problemas Escolares" }
+    ],
+    "label": "Psicología Infantil",
+    "mtag": "child_psychology"
+  },
+  {
+    "tags": [
+      { "tag": "teenagers", "label": "Adolescentes" },
+      { "tag": "peer_pressure", "label": "Presión de Pares" },
+      { "tag": "identity_crisis", "label": "Crisis de Identidad" },
+      { "tag": "self-esteem", "label": "Autoestima" },
+      { "tag": "family_conflicts", "label": "Conflictos Familiares" }
+    ],
+    "label": "Psicología Adolescente",
+    "mtag": "adolescent_psychology"
+  },
+  {
+    "tags": [
+      { "tag": "cbt", "label": "Terapia Cognitivo-Conductual" },
+      { "tag": "anxiety", "label": "Ansiedad" },
+      { "tag": "negative_thoughts", "label": "Pensamientos Negativos" },
+      {
+        "tag": "coping_strategies",
+        "label": "Estrategias de Afrontamiento"
+      },
+      { "tag": "stress_management", "label": "Manejo del Estrés" }
+    ],
+    "label": "Terapia Cognitivo-Conductual",
+    "mtag": "cognitive_behavioral_therapy"
+  },
+  {
+    "tags": [
+      { "tag": "brain_injuries", "label": "Lesiones Cerebrales" },
+      { "tag": "cognitive_assessment", "label": "Evaluación Cognitiva" },
+      { "tag": "memory_issues", "label": "Problemas de Memoria" },
+      { "tag": "dementia", "label": "Demencia" },
+      { "tag": "neurodevelopment", "label": "Neurodesarrollo" }
+    ],
+    "label": "Neuropsicología",
+    "mtag": "neuropsychology"
+  },
+  {
+    "tags": [
+      { "tag": "criminal_behavior", "label": "Comportamiento Criminal" },
+      { "tag": "legal_system", "label": "Sistema Legal" },
+      { "tag": "assessment", "label": "Evaluación" },
+      { "tag": "witness_interviews", "label": "Entrevistas a Testigos" },
+      { "tag": "rehabilitation", "label": "Rehabilitación" }
+    ],
+    "label": "Psicología Forense",
+    "mtag": "forensic_psychology"
+  },
+  {
+    "tags": [
+      { "tag": "athletes", "label": "Atletas" },
+      { "tag": "performance", "label": "Desempeño" },
+      { "tag": "motivation", "label": "Motivación" },
+      { "tag": "stress", "label": "Estrés" },
+      { "tag": "injury_recovery", "label": "Recuperación de Lesiones" }
+    ],
+    "label": "Psicología Deportiva",
+    "mtag": "sports_psychology"
+  },
+  {
+    "tags": [
+      {
+        "tag": "learning_difficulties",
+        "label": "Dificultades de Aprendizaje"
+      },
+      { "tag": "school_support", "label": "Apoyo Escolar" },
+      { "tag": "teacher_training", "label": "Capacitación Docente" },
+      { "tag": "academic_performance", "label": "Desempeño Académico" },
+      { "tag": "special_needs", "label": "Necesidades Especiales" }
+    ],
+    "label": "Psicología Educativa",
+    "mtag": "educational_psychology"
+  },
+  {
+    "tags": [
+      { "tag": "chronic_diseases", "label": "Enfermedades Crónicas" },
+      { "tag": "behavior_change", "label": "Cambio de Comportamiento" },
+      { "tag": "smoking_cessation", "label": "Cese del Tabaquismo" },
+      { "tag": "weight_management", "label": "Control de Peso" },
+      { "tag": "patient_support", "label": "Apoyo al Paciente" }
+    ],
+    "label": "Psicología de la Salud",
+    "mtag": "health_psychology"
+  }
+]

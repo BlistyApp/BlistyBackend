@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Luis Gonzales",
+    "email": "luis.gonzales@example.com",
+    "role": "patient",
+    "birth_day": "1987-05-14T12:30:00-05:00",
+    "profile_pic": "https://avatar.iran.liara.run/public/26",
+    "phone": "979672804",
+    "terms": true
+  },
+  {
+    "name": "María Fernandez",
+    "email": "maria.fernandez@example.com",
+    "role": "patient",
+    "birth_day": "1990-11-23T08:45:00-05:00",
+    "profile_pic": "https://avatar.iran.liara.run/public/67",
+    "phone": "934705785",
+    "terms": true
+  },
+  {
+    "name": "Carlos Rojas",
+    "email": "carlos.rojas@example.com",
+    "role": "patient",
+    "birth_day": "1985-02-19T09:15:00-05:00",
+    "profile_pic": "https://avatar.iran.liara.run/public/33",
+    "phone": "996873335",
+    "terms": true
+  },
+  {
+    "name": "Ana Lopez",
+    "email": "ana.lopez@example.com",
+    "role": "patient",
+    "birth_day": "1992-07-07T14:50:00-05:00",
+    "profile_pic": "https://avatar.iran.liara.run/public/94",
+    "phone": "993801800",
+    "terms": true
+  },
+  {
+    "name": "Pedro Salinas",
+    "email": "pedro.salinas@example.com",
+    "role": "patient",
+    "birth_day": "1980-03-15T10:15:00-05:00",
+    "profile_pic": "https://avatar.iran.liara.run/public/7",
+    "phone": "970327203",
+    "terms": true
+  }
+]

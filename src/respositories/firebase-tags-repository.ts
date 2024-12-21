@@ -34,18 +34,18 @@ export class FirebaseTagsRepository implements TagsRepository {
   }
   async deleteTag(tag: Tag): Promise<void> {
     const tagsRef = this.db.collection("tags");
-    await tagsRef.doc(tag.id ?? tag.tag).delete();
+    await tagsRef.doc(tag.id).delete();
   }
   async deleteMasterTag(tag: MasterTag): Promise<void> {
     const masterTagsRef = this.db.collection("master-tags");
-    await masterTagsRef.doc(tag.id ?? tag.tag).delete();
+    await masterTagsRef.doc(tag.id).delete();
   }
   async updateTag(tag: Tag): Promise<void> {
     const tagsRef = this.db.collection("tags");
-    await tagsRef.doc(tag.id ?? tag.tag).update(tag);
+    await tagsRef.doc(tag.id).update(tag);
   }
   async updateMasterTag(tag: MasterTag): Promise<void> {
     const masterTagsRef = this.db.collection("master-tags");
-    await masterTagsRef.doc(tag.id ?? tag.tag).update(tag);
+    await masterTagsRef.doc(tag.id).update(tag);
   }
 }

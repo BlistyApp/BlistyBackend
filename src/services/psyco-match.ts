@@ -4,22 +4,47 @@ export const match = async (
   tags: Array<string>,
   mTags: Array<string>
 ): Promise<Array<string>> => {
-  const repo = RepositoryFactory.getPsycoRepository("firebase");
-  const psychologists = await repo.getPsycologists();
-  psychologists.forEach((psychologist) => {
-    let matchIndex = 0;
-    psychologist.tags.forEach((tag) => {
-      if (tags.includes(tag)) {
-        matchIndex += 1;
-      }
-    });
-    psychologist.mTags.forEach((tag) => {
-      if (mTags.includes(tag)) {
-        matchIndex += 2;
-      }
-    });
-    psychologist.matchIndex = matchIndex;
+  const psycoRepo = RepositoryFactory.getPsycoRepository("firebase");
+  const tagsRepo = RepositoryFactory.getTagsRepository("firebase");
+  const matchMap = new Map<string, number>();
+  const repoTags = await tagsRepo.getTags();
+  const repoMTags = await tagsRepo.getMasterTags();
+  repoTags.filter((tag) => tags.includes(tag.id));
+  repoMTags.filter((mTag) => mTags.includes(mTag.id));
+  repoTags.forEach((tag) => {
+    if (!matchMap.has(tag.masterTag)) {
+      matchMap.set(tag.masterTag, 0);
+    } else {
+      matchMap.set(tag.masterTag, matchMap.get(tag.id)! + 1);
+    }
   });
-  psychologists.sort((a, b) => b.matchIndex - a.matchIndex);
-  return psychologists.map((psychologist) => psychologist.id);
+  const bestMTag = Array.from(matchMap.entries()).reduce((a, b) =>
+    a[1] > b[1] ? a : b
+  );
+  let bestMTags = [...mTags, bestMTag[0]];
+  bestMTags = Array.from(new Set(bestMTags));
+  let bestTags = [...tags];
+  bestTags = Array.from(new Set(bestTags));
+  console.log("Tags", bestTags);
+  console.log("MTags", bestMTags);
+  const psycologists = await psycoRepo.getPsycologists();
+  const scores: Array<{ id: string; score: number }> = [];
+  psycologists.forEach((psyco) => {
+    let score = 0;
+    psyco.mTags.forEach((mTag) => {
+      if (bestMTags.includes(mTag)) {
+        score += 2;
+      }
+    });
+    psyco.tags.forEach((tag) => {
+      if (bestTags.includes(tag)) {
+        score += 1;
+      }
+    });
+    scores.push({ id: psyco.id, score });
+    console.log(psyco.name, score);
+  });
+  scores.sort((a, b) => b.score - a.score);
+  console.log(scores);
+  return scores.map((score) => score.id).slice(0, 3);
 };

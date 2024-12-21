@@ -5,6 +5,7 @@ import {
   doc,
   DocumentData,
   getDoc,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -17,6 +18,7 @@ import logger from "../utils/logger";
 import { FBMessage, OAIMessage, Room } from "../types/service";
 import { getResponse } from "../services/ai-chat";
 import { match } from "../services/psyco-match";
+import { updateSystemPrompt } from "src/config/openai";
 
 class FirebaseListener implements DatabaseListener {
   private activeListeners = new Map<string, () => void>();
@@ -29,7 +31,53 @@ class FirebaseListener implements DatabaseListener {
     onSnapshot(roomsQuery, this.roomListener.bind(this), (error) => {
       logger.error("Error setting up room listener", error.message);
     });
+    const systemQuery = query(collection(dbClient, "system"), limit(1));
+    onSnapshot(systemQuery, this.systemListener.bind(this), (error) => {
+      logger.error("Error setting up system listener", error.message);
+    });
+    const tagsQuery = query(collection(dbClient, "tags"));
+    onSnapshot(tagsQuery, this.tagsListener.bind(this), (error) => {
+      logger.error("Error setting up tags listener", error.message);
+    });
+    const mTagsQuery = query(collection(dbClient, "mTags"));
+    onSnapshot(mTagsQuery, this.mTagsListener.bind(this), (error) => {
+      logger.error("Error setting up mTags listener", error.message);
+    });
   }
+
+  async systemListener(
+    systemSnap: QuerySnapshot<DocumentData, DocumentData>
+  ): Promise<void> {
+    for (const systemChange of systemSnap.docChanges()) {
+      if (systemChange.type === "modified") {
+        logger.info("Modified system prompt");
+        await updateSystemPrompt();
+      }
+    }
+  }
+
+  async tagsListener(
+    tagsSnap: QuerySnapshot<DocumentData, DocumentData>
+  ): Promise<void> {
+    for (const tagsChange of tagsSnap.docChanges()) {
+      if (tagsChange.type === "modified" || tagsChange.type === "added") {
+        logger.info("Modified tags");
+        await updateSystemPrompt();
+      }
+    }
+  }
+
+  async mTagsListener(
+    mTagsSnap: QuerySnapshot<DocumentData, DocumentData>
+  ): Promise<void> {
+    for (const mTagsChange of mTagsSnap.docChanges()) {
+      if (mTagsChange.type === "modified" || mTagsChange.type === "added") {
+        logger.info("Modified mTags");
+        await updateSystemPrompt();
+      }
+    }
+  }
+
   async roomListener(
     roomsSnap: QuerySnapshot<DocumentData, DocumentData>
   ): Promise<void> {
@@ -136,6 +184,13 @@ class FirebaseListener implements DatabaseListener {
   FBMessageToOAIMessage(message: FBMessage): OAIMessage {
     const role = message.from === "blisty" ? "assistant" : "user";
     const content = message.text;
+    if (role === "assistant") {
+      return {
+        role,
+        content,
+        aiResponse: message.aiResponse ?? "",
+      };
+    }
     return { role, content };
   }
 
@@ -145,6 +200,16 @@ class FirebaseListener implements DatabaseListener {
     const text = message.content as string;
     const type = "contact";
     const createdAt = new Date();
+    if (message.role === "assistant") {
+      return {
+        createdAt,
+        from,
+        to,
+        text,
+        type,
+        aiResponse: message.aiResponse ?? "",
+      };
+    }
     return { createdAt, from, to, text, type };
   }
 
