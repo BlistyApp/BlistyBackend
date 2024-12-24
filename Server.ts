@@ -23,8 +23,18 @@ server.use(credsRouter);
 const listener = ListenersFactory.getListener("firebase");
 listener.initDBListeners();
 
+server.get("/logs", (req, res) => {
+  const key = req.query.key as string;
+  if (key !== process.env.LOGS_KEY) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+  const logFile = "/tmp/logs/blisty-backend.log";
+  res.download(logFile, path.basename(logFile));
+});
+
 server.use((_req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
 });
 
 server.listen(port, () => {
