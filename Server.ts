@@ -5,6 +5,7 @@ import credsRouter from "./src/routes/creds";
 import logger from "./src/utils/logger";
 import morgan, { StreamOptions } from "morgan";
 import ListenersFactory from "./src/services/listeners-factory";
+import path from "path";
 
 const server = express();
 const stream: StreamOptions = {
@@ -21,6 +22,10 @@ server.use(credsRouter);
 
 const listener = ListenersFactory.getListener("firebase");
 listener.initDBListeners();
+
+server.use((_req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
 
 server.listen(port, () => {
   logger.info(`Server is running on port ${port}`);
