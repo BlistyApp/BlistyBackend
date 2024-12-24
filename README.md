@@ -1,2 +1,2 @@
 # Blisty Backend
-Repo of blisty backend service.
+Repo of blisty backend service
