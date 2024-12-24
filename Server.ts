@@ -4,7 +4,7 @@ import express from "express";
 import credsRouter from "./src/routes/creds";
 import logsRouter from "./src/routes/logs";
 import logger from "./src/utils/logger";
-import aiChat from "./src/routes/ai-chat";
+import aiChatRouter from "./src/routes/ai-chat";
 import morgan, { StreamOptions } from "morgan";
 import path from "path";
 
@@ -21,7 +21,7 @@ server.use(express.json());
 server.use(morgan("combined", { stream }));
 server.use(credsRouter);
 server.use(logsRouter);
-server.use(aiChat);
+server.use(aiChatRouter);
 
 server.use((_req, res) => {
   res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
