@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { updateSystemPrompt } from "src/config/openai";
+import logger from "src/utils/logger";
 
 const router = Router();
 
@@ -10,5 +11,6 @@ router.get("/update", async (req, res) => {
         return;
     }
     await updateSystemPrompt();
+    logger.info("System prompt updated");
     res.status(200).send("ok");
 });
