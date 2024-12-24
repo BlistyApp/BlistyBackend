@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { generateResponse } from "src/services/gen-reponse";
-import logger from "src/utils/logger";
+import { generateResponse } from "../services/gen-reponse";
+import logger from "../utils/logger";
 
 const router = Router();
 
