@@ -5,6 +5,7 @@ import credsRouter from "./src/routes/creds";
 import logsRouter from "./src/routes/logs";
 import logger from "./src/utils/logger";
 import aiChatRouter from "./src/routes/ai-chat";
+import updateRouter from "./src/routes/update";
 import morgan, { StreamOptions } from "morgan";
 import path from "path";
 
@@ -22,6 +23,7 @@ server.use(morgan("combined", { stream }));
 server.use(credsRouter);
 server.use(logsRouter);
 server.use(aiChatRouter);
+server.use(updateRouter);
 
 server.use((_req, res) => {
   res.status(404).sendFile(path.join(__dirname, "public", "404.html"));

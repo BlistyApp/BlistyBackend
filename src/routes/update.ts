@@ -7,6 +7,7 @@ const router = Router();
 router.get("/update", async (req, res) => {
     const key = req.query.key as string;
     if (key !== process.env.CHANGES_KEY) {
+        logger.error("Unauthorized request to update system prompt");
         res.status(401).send("Unauthorized");
         return;
     }
@@ -14,3 +15,5 @@ router.get("/update", async (req, res) => {
     logger.info("System prompt updated");
     res.status(200).send("ok");
 });
+
+export default router;
