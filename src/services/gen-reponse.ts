@@ -31,13 +31,15 @@ const generateResponse = async (
   }
   if (!last_message.responded) {
     const history = await getHistory(messages, room.last_refresh);
-    await processMessage(history, userId, room);
+    const newMessage = await processMessage(history, userId, room);
     await dbAdmin
       .collection("rooms")
       .doc(roomId)
       .collection("messages")
       .doc(last_message.id!)
       .update({ responded: true });
+    newMessage.createdAt = new Date();
+    await dbAdmin.collection("rooms").doc(roomId).collection("messages").add(newMessage);
     return true;
   }
   return false;
@@ -46,25 +48,25 @@ const generateResponse = async (
 const processMessage = async (
   history: Array<OAIMessage>,
   userId: string,
-  roomData : Room
+  roomData: Room
 ) => {
-    const response = await getResponse(history, userId);
-    const newMessage = OAIMessageToFBMessage(response.content, userId);
-    if(response.end){
-        const tags = roomData.tags??[];
-        const mTags = roomData.mTags??[];
-        tags.push(...response.tags);
-        mTags.push(...response.mTags);
-        const psycoUids = await match(tags, mTags);
-        newMessage.psicoUids = psycoUids.slice(0,3);
-        newMessage.type = "ia_suggestion";
-    }
-    await dbAdmin.collection("rooms").doc(roomData.roomId).update({
-        tags: response.tags,
-        mTags: response.mTags,
-        end: response.end
-    });
-    await dbAdmin.collection("rooms").doc(roomData.roomId).collection("messages").add(newMessage);
+  const response = await getResponse(history, userId);
+  const newMessage = OAIMessageToFBMessage(response.content, userId);
+  if (response.end) {
+    const tags = roomData.tags ?? [];
+    const mTags = roomData.mTags ?? [];
+    tags.push(...response.tags);
+    mTags.push(...response.mTags);
+    const psycoUids = await match(tags, mTags);
+    newMessage.psicoUids = psycoUids.slice(0, 3);
+    newMessage.type = "ia_suggestion";
+  }
+  await dbAdmin.collection("rooms").doc(roomData.roomId).update({
+    tags: response.tags,
+    mTags: response.mTags,
+    end: response.end
+  });
+  return newMessage;
 };
 
 const getHistory = async (messages: Array<FBMessage>, lastRefresh: Date) => {
