@@ -3,6 +3,7 @@ import { FBMessage, OAIMessage, Room } from "src/types/service";
 import logger from "src/utils/logger";
 import { getResponse } from "./ai-chat";
 import { match } from "./psyco-match";
+import { Timestamp } from "firebase-admin/firestore";
 
 const generateResponse = async (
   roomId: string,
@@ -32,7 +33,7 @@ const generateResponse = async (
   if (!last_message.responded) {
     const history = await getHistory(messages, room.last_refresh);
     const newMessage = await processMessage(history, userId, room);
-    newMessage.createdAt = new Date();
+    newMessage.createdAt = Timestamp.now();
     await dbAdmin.collection("rooms").doc(roomId).collection("messages").add(newMessage);
     await dbAdmin
       .collection("rooms")
@@ -69,7 +70,7 @@ const processMessage = async (
   return newMessage;
 };
 
-const getHistory = async (messages: Array<FBMessage>, lastRefresh: Date) => {
+const getHistory = async (messages: Array<FBMessage>, lastRefresh: Timestamp) => {
   const history: Array<OAIMessage> = [];
   messages.forEach((message) => {
     if (message.createdAt > lastRefresh) {
@@ -88,7 +89,7 @@ const OAIMessageToFBMessage = (
   const to = message.role === "assistant" ? userId : "blisty";
   const text = message.content as string;
   const type = "contact";
-  const createdAt = new Date();
+  const createdAt = Timestamp.now();
   if (message.role === "assistant") {
     return {
       createdAt,

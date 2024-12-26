@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase-admin/firestore";
+
 export type FirebaseCredentials = {
   apiKey: string;
   authDomain: string;
@@ -8,18 +10,18 @@ export type FirebaseCredentials = {
 };
 
 export type Room = {
-  createdAt: Date;
+  createdAt: Timestamp;
   end: boolean;
   userIds: string[];
   users: Array<User>;
   tags?: Array<string>;
   mTags?: Array<string>;
   roomId: string;
-  last_refresh: Date;
+  last_refresh: Timestamp;
 };
 
 export type FBMessage = {
-  createdAt: Date;
+  createdAt: Timestamp;
   from: string;
   text: string;
   to: string;
