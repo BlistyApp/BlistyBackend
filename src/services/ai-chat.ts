@@ -12,7 +12,13 @@ const getResponse = async (
     (await getName(userId)) ?? "Indefinido, omitir nombre de usuario";
   const aiMessages = Array<OAIMessage>();
   const sys = systemPrompt;
-  sys.user_info.name = name;
+  if (!sys.user_info) {
+    sys.user_info = {
+      name: name
+    }
+  }else{
+    sys.user_info.name = name;
+  }
   aiMessages.push({
     role: "system",
     content: JSON.stringify(sys),
