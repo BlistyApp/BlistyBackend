@@ -34,7 +34,9 @@ const generateResponse = async (
     const history = await getHistory(messages, room.last_refresh);
     const newMessage = await processMessage(history, userId, room);
     newMessage.createdAt = Timestamp.now();
-    await dbAdmin.collection("rooms").doc(roomId).collection("messages").add(newMessage);
+    await dbAdmin.collection("rooms").doc(roomId).collection("messages").add(newMessage).then((doc) => {
+      logger.info(`Message added to room ${roomId} with id ${doc.id}`);
+    });
     await dbAdmin
       .collection("rooms")
       .doc(roomId)
