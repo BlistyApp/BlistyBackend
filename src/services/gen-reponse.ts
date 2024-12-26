@@ -32,14 +32,14 @@ const generateResponse = async (
   if (!last_message.responded) {
     const history = await getHistory(messages, room.last_refresh);
     const newMessage = await processMessage(history, userId, room);
+    newMessage.createdAt = new Date();
+    await dbAdmin.collection("rooms").doc(roomId).collection("messages").add(newMessage);
     await dbAdmin
       .collection("rooms")
       .doc(roomId)
       .collection("messages")
       .doc(last_message.id!)
       .update({ responded: true });
-    newMessage.createdAt = new Date();
-    await dbAdmin.collection("rooms").doc(roomId).collection("messages").add(newMessage);
     return true;
   }
   return false;
